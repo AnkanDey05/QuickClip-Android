@@ -22,7 +22,7 @@ export class YtDlpExtractor implements VideoExtractor {
       // TODO: Integrate with native yt-dlp module when available
       // For now, throw error indicating this needs native setup
       throw new ExtractionError(
-        "yt-dlp native module not yet configured. Using fallback extractors."
+        "Could not extract video info. Make sure the URL is supported by yt-dlp and try again."
       );
 
       // Expected implementation when native module is ready:

@@ -59,10 +59,8 @@ class ExtractorRegistry {
       }
     }
 
-    // If we get here, no extractor worked
-    const errorMessages = errors.map((e) => e.message).join("; ");
     throw new ExtractionError(
-      `Could not extract video information. Tried extractors but all failed: ${errorMessages}`
+      "Could not extract video info. Make sure the URL is supported by yt-dlp and try again."
     );
   }
 

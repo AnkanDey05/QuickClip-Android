@@ -1,6 +1,6 @@
 {
-  "name": "UniversalDownloader",
-  "version": "0.0.1",
+  "name": "QuickClip",
+  "version": "2.0.0",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -10,10 +10,30 @@
     "test": "jest"
   },
   "dependencies": {
+    "@notifee/react-native": "^9.1.8",
+    "@react-native-clipboard/clipboard": "^1.16.3",
+    "@react-native/new-app-screen": "0.85.2",
+    "@react-navigation/bottom-tabs": "^7.15.11",
+    "@react-navigation/native": "^7.2.2",
+    "@react-navigation/native-stack": "^7.15.1",
+    "axios": "^1.16.0",
     "react": "19.2.3",
     "react-native": "0.85.2",
-    "@react-native/new-app-screen": "0.85.2",
-    "react-native-safe-area-context": "^5.5.2"
+    "react-native-blob-util": "^0.24.7",
+    "react-native-fs": "^2.20.0",
+    "react-native-gesture-handler": "^2.31.2",
+    "react-native-material-you-colors": "^0.1.2",
+    "react-native-paper": "^5.15.1",
+    "react-native-reanimated": "^4.3.0",
+    "react-native-receive-sharing-intent": "^2.0.0",
+    "react-native-safe-area-context": "^5.7.0",
+    "react-native-screens": "^4.24.0",
+    "react-native-vector-icons": "^10.3.0",
+    "react-native-video": "^6.19.2",
+    "react-native-worklets": "^0.8.3",
+    "react-native-worklets-core": "^1.6.3",
+    "uuid": "^14.0.0",
+    "zustand": "^5.0.12"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

@@ -39,7 +39,6 @@
 
 ### Core Downloading
 - **Native yt-dlp binary** — extraction and downloading happen entirely on-device, with zero reliance on third-party servers. Over 1 000 platforms are supported out of the box.
-- **Cobalt API fallback** — if yt-dlp cannot handle a URL, the app automatically rotates through a pool of public Cobalt API instances (with automatic failover between instances).
 - **Multi-format selection** — after extraction, the user picks from every available quality: 2160p → 360p, audio-only (MP3), or a merged best-quality track.
 - **Clip downloads** — trim any video to a custom start/end timestamp before downloading. yt-dlp handles the server-side clip so only the requested segment is transferred.
 - **Concurrent downloads** — up to 5 simultaneous downloads (configurable in Settings). The global download engine runs at the `App` level and continues regardless of which screen is active.
@@ -143,7 +142,6 @@ QuickClip-Android/
 │   │   ├── extractors/
 │   │   │   ├── ytdlpBridge.ts        # JS wrapper for YtDlpModule RN bridge
 │   │   │   ├── YtDlpExtractor.ts     # Extractor class (native path)
-│   │   │   ├── cobaltApi.ts          # Cobalt API fallback extractor
 │   │   │   ├── YouTubeExtractor.ts   # YouTube-specific fallback
 │   │   │   ├── InstagramExtractor.ts # Instagram-specific fallback
 │   │   │   ├── FacebookExtractor.ts  # Facebook-specific fallback
@@ -195,7 +193,7 @@ Extraction follows a **chain-of-responsibility** pattern managed by `ExtractorRe
 URL
  │
  ▼
-YtDlpExtractor      ← tries first (native binary, 1000+ sites)
+YtDlpExtractor      ← primary (native binary, 1000+ sites)
  │ fails
  ▼
 YouTubeExtractor    ← YouTube-specific JS fallback
@@ -207,7 +205,8 @@ InstagramExtractor  ← Instagram-specific JS fallback
 FacebookExtractor   ← Facebook-specific JS fallback
  │ all fail
  ▼
-cobaltApi.ts        ← rotates through 4 public Cobalt instances
+throw error         ← "Could not extract video info. Make sure the URL
+                       is supported by yt-dlp and try again."
 ```
 
 Each extractor implements the `VideoExtractor` interface:
@@ -219,7 +218,7 @@ interface VideoExtractor {
 }
 ```
 
-The registry tries each in order, swallowing individual errors and only throwing once all options are exhausted. New extractors can be registered at runtime via `extractorRegistry.addExtractor(extractor, priority?)`.
+The registry tries each in order, swallowing individual errors and only throwing once all options are exhausted. The platform-specific JS extractors (YouTube, Instagram, Facebook) act as thin fallbacks within the chain; yt-dlp handles the vast majority of URLs on its own. New extractors can be registered at runtime via `extractorRegistry.addExtractor(extractor, priority?)`.
 
 `VideoInfo` carries the full metadata (title, thumbnail, duration, uploader, view count) plus an array of `VideoFormat` objects. Each format records quality label, direct URL, codec, FPS, file size estimate, and `hasAudio`/`hasVideo` flags — everything the UI and download engine need to start a download.
 
@@ -357,7 +356,6 @@ cd android
 | `react-native-video` | In-app video playback |
 | `react-native-receive-sharing-intent` | Android share-sheet interception |
 | `react-native-material-you-colors` | Wallpaper-based color extraction |
-| `axios` | HTTP client for Cobalt API fallback |
 | `youtubedl-android` (Kotlin) | Bundled yt-dlp native binary |
 
 ---

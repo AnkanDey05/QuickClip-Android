@@ -37,35 +37,12 @@
 
 ## Features
 
-### Core Downloading
-- **Native yt-dlp binary** — extraction and downloading happen entirely on-device, with zero reliance on third-party servers. Over 1 000 platforms are supported out of the box.
-- **Multi-format selection** — after extraction, the user picks from every available quality: 2160p → 360p, audio-only (MP3), or a merged best-quality track.
-- **Clip downloads** — trim any video to a custom start/end timestamp before downloading. yt-dlp handles the server-side clip so only the requested segment is transferred.
-- **Concurrent downloads** — up to 5 simultaneous downloads (configurable in Settings). The global download engine runs at the `App` level and continues regardless of which screen is active.
-- **No-overwrite policy** — duplicate filenames are automatically suffixed `(1)`, `(2)`, etc.
-
-### Library & Organization
-- **Folder system** — downloads are organized into user-created folders. Two system folders (Favorites ♥ and Saved for Later 🕐) are always pinned at the top of the Library.
-- **Persistent metadata** — completed downloads, folder assignments, favorites, and saved items are all serialized to a hidden `.quickclip_*.json` file inside the download directory. The library survives app restarts.
-- **v1 → v2 migration** — on first launch, the app automatically migrates metadata from the legacy `UniversalDownloader/` path to `QuickClip/`.
-- **File-system scan** — `loadFromFilesystem()` cross-references saved metadata against real files on disk, so manually deleted files are pruned from the library automatically.
-- **Folder Detail screen** — drill into any folder to browse, play, share, or delete its downloads individually.
-
-### User Experience
-- **Share intent** — share any video URL from a browser or social app directly into QuickClip. The `useSharedContent` hook intercepts the Android share sheet automatically.
-- **Clipboard banner** — if a valid video URL is detected on the clipboard, a dismissible banner appears at the top of the Home screen to paste it in one tap.
-- **Real-time progress** — per-download progress bars, speed (MB/s), and ETA are updated at most every 500 ms (throttled to prevent UI jank).
-- **Notification system** — Notifee-powered foreground notifications show live progress, completion, and failure states. On Android 13+, the app requests the `POST_NOTIFICATIONS` permission at startup.
-- **Stats card** — the Home screen shows aggregate totals (files downloaded, total size, active count).
-- **Recent Downloads** — a quick-access strip of the latest completed downloads on the Home screen.
-- **Platform grid** — a visual grid of supported platforms (YouTube, Instagram, Facebook, TikTok, X/Twitter) with quick-paste example URLs.
-
-### Settings
-- **Custom download path** — native directory picker lets the user choose any folder. Changing the path migrates existing metadata and files automatically.
-- **Default quality** — choose a preferred quality preset (Best, 1080p, 720p, 480p, Audio Only) applied as the default when downloading.
-- **Concurrent download limit** — slider from 1–5 parallel downloads.
-- **Cache management** — view and clear the app cache from within Settings.
-- **yt-dlp auto-update** — the bundled binary checks for updates on every app launch (non-blocking).
+- **100% on-device extraction** — powered by a bundled yt-dlp binary with support for 1 000+ platforms. No third-party servers, no rate limits.
+- **Clip downloads** — trim a video to a custom start/end timestamp before downloading. Only the requested segment is fetched.
+- **Concurrent downloads** — up to 5 simultaneous downloads, running at the app root so they continue regardless of which screen is active.
+- **Share intent** — share any URL directly from a browser or social app into QuickClip via the Android share sheet.
+- **Folder-based library** — organize downloads into custom folders with system-pinned Favorites and Saved for Later collections. Library state is persisted and reconciled against real files on disk at startup.
+- **Material You theming** — dynamically builds a full M3 dark theme from the device's wallpaper color palette (Android 12+).
 
 ---
 
